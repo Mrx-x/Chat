@@ -15,9 +15,11 @@ add_subdirectory(third_party)
 
 add_library(server_lib
   Server/src/Server.cpp
-  Server/src/Server.hpp
+  Server/src/CommandRouter.cpp
+  Server/src/TopicManager.cpp
+  Server/src/UserManager.cpp
 )
-target_include_directories(server_lib PUBLIC Server/src)
+target_include_directories(server_lib PUBLIC Server/include)
 target_link_libraries(server_lib
   PRIVATE
     uwebsockets
