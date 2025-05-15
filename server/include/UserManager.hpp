@@ -26,6 +26,7 @@ namespace Chat
         void setName(const std::string& id, const std::string& name);
         std::vector<PerSocketData*> listUsers(std::size_t limit) const;
         uWebSocket* getSocket(const std::string& id) const;
+        std::vector<uWebSocket*> getAllSockets() const;
         PerSocketData* getUser(const std::string& id) const;
 
     private:

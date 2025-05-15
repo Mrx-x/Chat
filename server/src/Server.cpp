@@ -25,7 +25,7 @@ namespace Chat
 
                 nlohmann::json response =
                 {
-                    { "command", "Welcome" },
+                    { "type", "welcome" },
                     { "id", user->id }
                 };
 

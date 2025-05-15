@@ -10,12 +10,12 @@ namespace Chat
 
     class CommandRouter : public IHandler
     {
-
     public:
         CommandRouter(UserManager& userManager, TopicManager& topicManager);
 
     public:
         void handle(uWebSocket* ws, const std::string& message) override;
+        void broadscastUsersList(uWebSocket* ws, int limit = 0);
 
     private:
         void registerUser();

@@ -44,6 +44,14 @@ namespace Chat
             return nullptr;
     }
 
+    std::vector<UserManager::uWebSocket*> UserManager::getAllSockets() const
+    {
+        std::vector<uWebSocket*> result;
+        result.reserve(_sockets.size());
+        for (const auto& [id, socket] : _sockets) result.push_back(socket);
+        return result;
+    }
+
     PerSocketData* UserManager::getUser(const std::string& id) const
     {
         if (auto it = _sockets.find(id); it != _sockets.end())
