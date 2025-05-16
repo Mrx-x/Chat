@@ -40,6 +40,7 @@ namespace Chat
                 auto id = ws->getUserData()->id;
                 _userManager.removeConnection(id);
                 std::cout << "[-] " << id << " disconected\n";
+                _commandRouter.broadscastDisconnectUser(id);
             }
         })
         .listen(port, [port](auto *token) 

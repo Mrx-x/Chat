@@ -174,21 +174,23 @@ class ChatController {
 
   routeMessage(msg) {
     switch (msg.type) {
-      case 'welcome':
+      case 'welcome': {
         this.currentId = msg.id;
         this.ws.send({ type:'list' });
         break;
+      }
 
-      case 'registered':
+      case 'registered': {
         this.ui.appendMessage('System', `Registered as ${msg.name}`);
         break;
-
-      case 'user_list':
+      }
+      case 'user_list': {
         this.users = msg.users.filter(u=>u.id!==this.currentId);
         this.ui.clearMessages();
         this.ui.currentChat = null;
         this.ui.renderUsers(this.users, (t,id)=>this.selectChat(t,id));
         break;
+      }
 
       case 'private': {
         const key = `user:${msg.from}`;
@@ -202,10 +204,11 @@ class ChatController {
         break;
       }
 
-      case 'joined':
+      case 'joined': {
         this.topics.add(msg.topic);
         this.ui.renderTopics(Array.from(this.topics), (t,id)=>this.selectChat(t,id));
         break;
+      }
 
       case 'topic': {
         const key = `topic:${msg.topic}`;
@@ -215,6 +218,22 @@ class ChatController {
         } else {
           this.ui.markUnread('topic', msg.topic);
           this.ui.renderTopics(Array.from(this.topics), (t,id)=>this.selectChat(t,id));
+        }
+        break;
+      }
+
+      case 'disconnect': {
+        const disconnectId = msg.id;
+        const key = `user:${disconnectId}`;
+
+        delete this.history[key];
+
+        this.users = this.users.filter(u => u.id !== disconnectId);
+        this.ui.renderUsers(this.users, (t, id) => this.selectChat(t, id));
+
+        if (this.ui.currentChat?.type === 'user' && this.ui.currentChat.id === disconnectId) {
+          this.ui.clearMessages();
+          this.ui.currentChat = null;
         }
         break;
       }

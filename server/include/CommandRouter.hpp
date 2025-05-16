@@ -16,7 +16,7 @@ namespace Chat
     public:
         void handle(uWebSocket* ws, const std::string& message) override;
         void broadscastUsersList(uWebSocket* ws, int limit = 0);
-
+        void broadscastDisconnectUser(const std::string& id);
     private:
         void registerUser();
         void listUsers();

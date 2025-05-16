@@ -164,4 +164,18 @@ namespace Chat
 
         ws->send(response.dump(), uWS::OpCode::TEXT);
     }
+
+    void CommandRouter::broadscastDisconnectUser(const std::string& id)
+    {
+        nlohmann::json response = 
+        {
+            { "type", "disconnect" },
+            { "id", id }
+        };
+
+        for (auto* socket : _userManager.getAllSockets())
+        {
+            if (socket) socket->send(response.dump(), uWS::OpCode::TEXT);
+        }
+    }
 }
