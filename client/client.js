@@ -39,6 +39,13 @@ class UIManager {
     this.sendButton  = document.getElementById('sendBtn');
     this.unread      = { users: {}, topics: {} };
     this.currentChat = null;
+
+    this.inputField.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        this.sendButton.click();
+      }
+    })
   }
 
   bindLogin(handler) {
@@ -123,6 +130,8 @@ class UIManager {
 
   appendMessage(from, text) {
     const d = document.createElement('div');
+    d.className = 'message' + (from === 'Me' ? ' own' : '');
+    console.log(text);
     d.textContent = `${from}: ${text}`;
     this.messagesDiv.appendChild(d);
     this.messagesDiv.scrollTop = this.messagesDiv.scrollHeight;
