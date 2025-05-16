@@ -214,7 +214,7 @@ class ChatController {
         const key = `topic:${msg.topic}`;
         this._saveMessage(key, msg.from, msg.text);
         if (this.ui.currentChat?.type==='topic' && this.ui.currentChat.id===msg.topic) {
-          this.ui.appendMessage(`${msg.topic}:${msg.from}`, msg.text);
+          this.ui.appendMessage(`${msg.from}`, msg.text);
         } else {
           this.ui.markUnread('topic', msg.topic);
           this.ui.renderTopics(Array.from(this.topics), (t,id)=>this.selectChat(t,id));

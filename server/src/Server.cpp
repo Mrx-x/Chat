@@ -5,12 +5,16 @@
 
 namespace Chat
 {
+    static const std::string generalTopic = "general";
+
     ChatServer::ChatServer()
     : _userManager(), _topicManager(), _commandRouter(_userManager, _topicManager)
     {}
 
     void ChatServer::run(int port)
     {
+        _topicManager.create(generalTopic);
+
         uWS::App().ws<PerSocketData>("/*", 
         {
             .open = [this](auto *ws) 
@@ -21,6 +25,8 @@ namespace Chat
                 user->id = id;
                 user->userName = user->id;
 
+                _topicManager.join(generalTopic, id);
+
                 std::cout << "[+] Client connected: " << user->id << "\n";
 
                 nlohmann::json response =
@@ -29,7 +35,15 @@ namespace Chat
                     { "id", user->id }
                 };
 
-                ws->send(response.dump(), uWS::OpCode::TEXT); 
+                ws->send(response.dump(), uWS::OpCode::TEXT);
+
+                nlohmann::json joinedResponse = 
+                {
+                    { "type", "joined" },
+                    { "topic", generalTopic }
+                };
+
+                ws->send(joinedResponse.dump(), uWS::OpCode::TEXT);
             },
             .message = [this](auto *ws, std::string_view msg, uWS::OpCode)
             { 
