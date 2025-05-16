@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ChatApp Web</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="login">
+  <form id="loginForm">
+    <h2>Connect to Chat</h2>
+    <input id="serverUrl" type="text" placeholder="ws://localhost:9001" required />
+    <input id="username" type="text" placeholder="Your name" required />
+    <button type="submit">Enter Chat</button>
+  </form>
+</div>
+
+<div id="chat">
+  <div id="sidebar">
+    <h3>Users</h3>
+    <ul id="users"></ul>
+    <h3>Topics</h3>
+    <ul id="topics"></ul>
+  </div>
+  <div id="main">
+    <div id="messages"></div>
+    <div id="inputBar">
+      <input id="messageInput" type="text" placeholder="Type a message..." />
+      <button id="sendBtn">Send</button>
+    </div>
+  </div>
+</div>
+
+<script src="client.js"></script>
+</body>
+</html>
