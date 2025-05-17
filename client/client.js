@@ -131,8 +131,8 @@ class UIManager {
   appendMessage(from, text) {
     const d = document.createElement('div');
     d.className = 'message' + (from === 'Me' ? ' own' : '');
-    console.log(text);
-    d.textContent = `${from}: ${text}`;
+    let prefix = new RegExp("(^user.+$)");
+    d.textContent = prefix.test(from) ? `${text}` : `${from}: ${text}`;
     this.messagesDiv.appendChild(d);
     this.messagesDiv.scrollTop = this.messagesDiv.scrollHeight;
   }
