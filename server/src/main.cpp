@@ -6,7 +6,7 @@ const unsigned int       MAX_PORT_VALUE = 65535; // max for short int
 const unsigned short int DEFAULT_PORT   = 9002;
 const unsigned int       ERROR_PORT     = 0;
 
-static unsigned int parsePort(int argc, char *argv[]) 
+static unsigned short int parsePort(int argc, char *argv[]) 
 {
     static int         paramStrCount = 6;
     static const char *portParamName = "--port";
